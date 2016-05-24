@@ -17,5 +17,27 @@ entity sum is port (
 end sum;
 
 architecture arch of sum is
+begin
+  	process (clk,reset)
+	  variable cpt : natural;
+	  variable r1 : std_logic_vector (7 downto 0);
+	  variable r2 : std_logic_vector (7 downto 0);
+	  type t_etat is (passif, un, deux);
+	  variable etat : t_etat;
+	begin
+	  if (reset = '0') then
+		etat := passif;
+		cpt := 7;
+		r1 := (others => '0');
+		r2 := (others => '0');
+		s <= (others => '0');
+		carry <= '0';
+		busy <= '0';
+		sclk <= '0';
+		mosi <= '0';
+		ss <= '0';
+	  elsif (rising_edge(clk)) then
 
+	  end if;
+	end process;
 end arch;
