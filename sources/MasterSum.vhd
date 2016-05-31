@@ -55,14 +55,18 @@ begin
 	  variable etat : t_etat;
 	begin
 	  if (reset = '0') then
+
 		etat := passif;
 		cpt := 4;
 		s <= (others => '0');
 		carry <= '0';
 		busy <= '0';
 		ss <= '1';
+
 	  elsif (rising_edge(clk)) then
+
 		case etat is 
+
 		  when passif =>
 			if (en = '1') then
 				cpt := 4;
@@ -70,6 +74,7 @@ begin
 				ss <= '0';
 				etat := attente1;
 			end if;
+
 		  when attente1 =>
 			if (cpt = 0) then 
 			  e_en <= '1';
@@ -78,6 +83,7 @@ begin
 			else
 			  cpt := cpt - 1;
 			end if;
+
 		  when emission1 =>
 			if (e_busy = '0' and e_en = '0') then
 			  s <= dout;
@@ -86,6 +92,7 @@ begin
 			else
 			  e_en <= '0';
 			end if;
+
 		  when attente2 =>
 			if (cpt = 0) then
 			  e_en <= '1';
@@ -94,6 +101,7 @@ begin
 			else
 			  cpt := cpt - 1;
 			end if;
+
 		  when emission2 =>
 			if (e_busy = '0' and e_en = '0') then
 			  busy <= '0';
@@ -103,8 +111,11 @@ begin
 			else
 			  e_en <= '0';
 			end if;
+
 		end case;
+
 	  end if;
+
 	end process;
 	
 end arch;

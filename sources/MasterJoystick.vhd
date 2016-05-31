@@ -109,6 +109,7 @@ begin
 		  when em2 =>
 			if (e_busy = '0' and e_en = '0') then
 			  X(9 downto 8) <= dout(1 downto 0);
+			  cpt := 10;
 			  etat := at3;
 			else
 			  e_en <= '0';
@@ -125,6 +126,7 @@ begin
 		  when em3 =>
 			if (e_busy = '0' and e_en = '0') then
 			  Y(7 downto 0) <= dout;
+			  cpt := 10;
 			  etat := at4;
 			else
 			  e_en <= '0';
@@ -141,6 +143,7 @@ begin
 		  when em4 =>
 			if (e_busy = '0' and e_en = '0') then
 			  Y(9 downto 8) <= dout(1 downto 0);
+			  cpt := 10;
 			  etat := at5;
 			else
 			  e_en <= '0';
