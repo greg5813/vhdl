@@ -15,13 +15,18 @@ end er_1octet;
 
 architecture arch of er_1octet is
 begin
+
   	process (clk,reset)
+	
 	  variable cpt : natural;
 	  variable registre : std_logic_vector (7 downto 0);
 	  type t_etat is (passif, un, deux);
 	  variable etat : t_etat;
+	  
 	begin
+	
 	  if (reset = '0') then
+	  
 		etat := passif;
 		cpt := 7;
 		registre := (others => '0');
@@ -29,8 +34,11 @@ begin
 		sclk <= '0';
 		busy <= '0';
 		mosi <= '0';
+		
 	  elsif (rising_edge(clk)) then
+	  
 		case etat is
+		
 		  when passif => 
 			if (en = '1') then
 			  registre := din;
@@ -39,10 +47,12 @@ begin
 			  mosi <= registre(cpt);
 			  etat := un;
 		    end if;
+			 
 		  when un => 
 			sclk <= '1';
 			registre(cpt) := miso;
 			etat := deux;
+			
 		  when deux =>
 			sclk <= '0';
 			if (cpt = 0) then
@@ -54,7 +64,11 @@ begin
 			  mosi <= registre(cpt);
 			  etat := un;
 			end if;
+			
 		end case;
+		
 	  end if;
+	  
 	end process;
+	
 end arch;

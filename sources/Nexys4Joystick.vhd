@@ -5,7 +5,7 @@ use IEEE.std_logic_unsigned.all;
 
 entity Nexys4 is
   port (
-    -- les 2 switchs
+    -- les 2 switchs pour les leds
     swt : in std_logic_vector (1 downto 0);
     -- les anodes pour sélectionner l'afficheur 7 segments
     an : out std_logic_vector (7 downto 0);
@@ -13,7 +13,7 @@ entity Nexys4 is
     ssg : out std_logic_vector (7 downto 0);
     -- horloge
     mclk : in std_logic;
-    -- les 5 leds
+    -- les 4 leds 
     led : out std_logic_vector (3 downto 0);
 	 -- les pins de coms
 	 ss : out std_logic;
@@ -46,25 +46,25 @@ architecture synthesis of Nexys4 is
   end component;
 
   component All7Segments Port ( 
-	   clk : in  std_logic;
-           reset : in std_logic;
-           e0 : in std_logic_vector (3 downto 0);
-           e1 : in std_logic_vector (3 downto 0);
-           e2 : in std_logic_vector (3 downto 0);
-           e3 : in std_logic_vector (3 downto 0);
-           e4 : in std_logic_vector (3 downto 0);
-           e5 : in std_logic_vector (3 downto 0);
-           e6 : in std_logic_vector (3 downto 0);
-           e7 : in std_logic_vector (3 downto 0);
-           an : out std_logic_vector (7 downto 0);
-           ssg : out std_logic_vector (7 downto 0));
+	    clk : in  std_logic;
+       reset : in std_logic;
+       e0 : in std_logic_vector (3 downto 0);
+       e1 : in std_logic_vector (3 downto 0);
+       e2 : in std_logic_vector (3 downto 0);
+       e3 : in std_logic_vector (3 downto 0);
+       e4 : in std_logic_vector (3 downto 0);
+       e5 : in std_logic_vector (3 downto 0);
+       e6 : in std_logic_vector (3 downto 0);
+       e7 : in std_logic_vector (3 downto 0);
+       an : out std_logic_vector (7 downto 0);
+       ssg : out std_logic_vector (7 downto 0));
   end component;  
   
   component diviseurClk
-    generic(facteur : natural);
-    port (
-    clk, reset : in  std_logic;
-    nclk       : out std_logic);
+       generic(facteur : natural);
+       port (
+       clk, reset : in  std_logic;
+       nclk       : out std_logic);
   end component;
   
   signal e2b, e6b : std_logic_vector(3 downto 0);
@@ -88,14 +88,14 @@ begin
 				 mosi => mosi,
 				 ss => ss,
 				 clk => clk,
-				 reset => not(btnC));
+				 reset => not btnC);
   
   e2b <= ( 0 => Y(8), 1 => Y(9), others => '0');
   e6b <= ( 0 => X(8), 1 => X(9), others => '0');  
   
   A7 : All7Segments 
   Port map( clk => mclk,
-				reset =>  not(btnC), 
+				reset =>  not btnC, 
 				e0 => Y(3 downto 0),
 				e1 => Y(7 downto 4),
 				e2 => e2b,
@@ -110,8 +110,8 @@ begin
   DC : diviseurClk
     generic map(100)
     port map(
-    clk => mclk,
-	 reset => btnC,
-    nclk => clk);
+				clk => mclk,
+				reset => not btnC,
+				nclk => clk);
 	
 end synthesis;
