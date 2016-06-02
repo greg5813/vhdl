@@ -1,10 +1,10 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
  
-ENTITY test_MasterSum IS
-END test_MasterSum;
+ENTITY TestSum IS
+END TestSum;
  
-ARCHITECTURE behavior OF test_MasterSum IS 
+ARCHITECTURE behavior OF TestSum IS 
   
     COMPONENT sum
     PORT(
