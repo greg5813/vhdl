@@ -2,15 +2,15 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 entity MasterJoystick is port ( 
-       en : in std_logic;
-  		 busy : out std_logic;
-	    led1 : in std_logic;
-		 led2 : in std_logic;
-	  	 btn1 : out std_logic;
-		 btn2 : out std_logic;
-		 btnJ : out std_logic;
-		 X : out std_logic_vector (9 downto 0);
-		 Y: out std_logic_vector (9 downto 0);
+       en : in std_logic;	-- activation
+  		 busy : out std_logic;	-- indicateur d'activité de la communication
+	    led1 : in std_logic; -- activation led 1 joystick
+		 led2 : in std_logic; -- activation led 2 joystick
+	  	 btn1 : out std_logic; -- etat bouton 1 du joystick
+		 btn2 : out std_logic; -- etat bouton 2 du joystick
+		 btnJ : out std_logic; -- etat bouton du joystick
+		 X : out std_logic_vector (9 downto 0); -- position x du joystick
+		 Y: out std_logic_vector (9 downto 0); -- position y du joystick
 		 sclk : out std_logic;
        miso : in std_logic;
        mosi : out std_logic;
@@ -68,7 +68,7 @@ begin
 		ss <= '1';
 		
 	  elsif (rising_edge(clk)) then
-	  
+	  	-- automate à état (en attente de communication, attente avant première émission, échange premier octet, attente entre deux échanges, échange second octet, ...)
 		case etat is 
 		
 		  when passif =>

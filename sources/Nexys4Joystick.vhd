@@ -5,17 +5,17 @@ use IEEE.std_logic_unsigned.all;
 
 entity Nexys4 is
   port (
-    -- les 2 switchs
+    -- les 2 switchs pour activer les leds du joystick
     swt : in std_logic_vector (1 downto 0);
     -- les anodes pour sélectionner l'afficheur 7 segments
     an : out std_logic_vector (7 downto 0);
     -- afficheur 7 segments (point décimal compris, segment 7)
     ssg : out std_logic_vector (7 downto 0);
-    -- horloge
+    -- horloge de la carte
     mclk : in std_logic;
-    -- les 5 leds
+    -- les 4 leds pour afficher l'état de la communication(0) et des boutons du joystick
     led : out std_logic_vector (3 downto 0);
-	 -- les pins de coms
+	 -- les pins de com avec le joystick
 	 ss : out std_logic;
 	 miso : in std_logic;
 	 mosi : out std_logic;

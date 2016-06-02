@@ -2,16 +2,16 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 entity sum is port ( 
-  		 en : in std_logic;
-  		 e1 : in std_logic_vector (7 downto 0);
-  		 e2 : in std_logic_vector (7 downto 0);
-  		 s : out std_logic_vector (7 downto 0);
-  		 carry : out std_logic;
-  		 busy : out std_logic;
-       sclk : out std_logic ;
-       mosi : out std_logic ;
-       miso : in std_logic ;
-       ss   : out  std_logic;
+  		 en : in std_logic;	-- activation
+  		 e1 : in std_logic_vector (7 downto 0);	-- premier facteur
+  		 e2 : in std_logic_vector (7 downto 0);	-- second facteur
+  		 s : out std_logic_vector (7 downto 0);	-- somme
+  		 carry : out std_logic;	-- retenue
+  		 busy : out std_logic; -- indicateur d'activité de la communication
+       sclk : out std_logic ; -- horloge de la communication
+       mosi : out std_logic ; -- sortie du maitre
+       miso : in std_logic ;	-- entrée du maitre
+       ss   : out  std_logic;	-- activation de la communication
 		 reset : in std_logic;
 		 clk : in std_logic );
 end sum;
@@ -64,7 +64,7 @@ begin
 		ss <= '1';
 
 	  elsif (rising_edge(clk)) then
-
+		-- automate à état (en attente de communication, attente avant première émission, échange premier octet, attente entre deux échanges, échange second octet)
 		case etat is 
 
 		  when passif =>
